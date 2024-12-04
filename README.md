@@ -10,6 +10,10 @@ nothing in ctrl+U. going to "view sourcecode" will find php code. take the encod
 ->Natas9<br>
 play around. type * and it gives the source code. tried ls -a. # verifies that it's working. ```| cat``` gives entire txt file. or just do http://natas9.natas.labs.overthewire.org/dictionary.txt (as proven by typing ```ls -a``` in search)<br> given at beginning of natas - all pwds are at /etc/natas_webpass/natasX. so type ```| cat /etc/natas_webpass/natas10```.<br><br>
 ->Natas10<br>
+search ```"" cat /etc/natas_webpass/natas11```.<br><br>
+->Natas11<br>
+WTF.<br><br>
+->Natas12<br>
 
 
 
