@@ -12,8 +12,10 @@ play around. type * and it gives the source code. tried ls -a. # verifies that i
 ->Natas10<br>
 search ```"" cat /etc/natas_webpass/natas11```.<br><br>
 ->Natas11<br>
-WTF.<br><br>
+WTF. 3 things - key,cipher,plaintext - are reqd. in XOR encryption. to find key do XOR of cipher and plaintext. plaintext = ```{"showpassword":"no","bgcolor":"#ffffff"}```. copy COOKIE, b64 decode it, XOR it using plaintext as key. key will be obtained as repeated pattern. now set showpwd to yes in plaintext and do reverse to find cookie. change value of cookie and reload page.<br><br>
 ->Natas12<br>
+```A malicious file such as a Unix shell script, a windows virus, an Excel file with a dangerous formula, or a reverse shell can be uploaded on the server in order to execute code by an administrator or webmaster later – on the victim’s machine.```
+
 
 
 
