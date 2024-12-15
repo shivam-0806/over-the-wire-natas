@@ -116,12 +116,17 @@ for x in range(1,641):
 <br><br>
 ->Natas20<br>
 pay attention to ```$_SESSION[$parts[0]] = $parts[1];``` in source code and add "/index.php?debug" to url to print debug output. if you put name as "test" output is like read: \[name test\] then newline read: [] so if we make $parts = {'admin','1'} this lvl will be solved, as final condition is ```$_SESSION["admin"] == 1```.
-so using burp suite make input of name like "test<newline>admin 1" this goes to mywrite and gets ksort-ed and gets printed as "admin=>1\nname=>test admin 1" and myread reads it after it ksorts it.<br>better would be enter "http://natas20.natas.labs.overthewire.org/index.php?debug&&name=test%0D%0Aadmin%201" and reload 1-2 times so u can see it along with debug. 2nd part is just url encoded "test\nadmin 1".<br>
+so using burp suite make input of name like "test<newline>admin 1" this goes to mywrite and gets ksort-ed and gets printed as "admin=>1\nname=>test admin 1" and myread reads it after it ksorts it.<br>better would be enter "http://natas20.natas.labs.overthewire.org/index.php?debug&&name=test%0D%0Aadmin%201" and reload 1-2 times so u can see it along with debug. 2nd part is just url encoded "test\nadmin 1".<br><br>
 ->Natas21<br>
-intercept the request to update styles on 2nd page through burpsuite and add "&admin=1". forward it. if you go to debug page, you can see that it has been added to the session array. simply reloading page1 doesn't work. so copy the cookie of pg2 and replace pg1's cookie with it and then reload :) .<br>
+intercept the request to update styles on 2nd page through burpsuite and add "&admin=1". forward it. if you go to debug page, you can see that it has been added to the session array. simply reloading page1 doesn't work. so copy the cookie of pg2 and replace pg1's cookie with it and then reload :) .<br><br>
 ->Natas22<br>
-
-
+took help. there is a paramter in session.get() called allow_redirects. make it equal to false.<br><br>
+->Natas23<br>
+type conversion error in php. read "https://medium.com/swlh/php-type-juggling-vulnerabilities-3e28c4ed5c09". ```For example, when PHP needs to compare the string “7 puppies” to the integer 7, PHP will attempt to EXTRACT the integer from the string. So this comparison will evaluate to True.``` try different combinations. will work for "<no>iloveyou" where <no> > 10. <br><br>
+->Natas24<br>
+"https://0xjay.com/bypassing-php-strcmp". ```== (strcmp) is an insecure comparison if the two strings are equal to each other then it returns true, this does not check data types. If we submit an empty array token[]=something PHP translates GET variables like this to an empty array which causes strcmp() to barf: strcmp(array(), "token") -> NULL which will return 0```. so in url just write "/?passwd[]=dsaa" (anything). it will throw an error and the flag.<br><br>
+->Natas25<br>
+help taken. 
 
 
 
