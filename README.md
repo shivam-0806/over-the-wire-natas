@@ -126,7 +126,12 @@ type conversion error in php. read "https://medium.com/swlh/php-type-juggling-vu
 ->Natas24<br>
 "https://0xjay.com/bypassing-php-strcmp". ```== (strcmp) is an insecure comparison if the two strings are equal to each other then it returns true, this does not check data types. If we submit an empty array token[]=something PHP translates GET variables like this to an empty array which causes strcmp() to barf: strcmp(array(), "token") -> NULL which will return 0```. so in url just write "/?passwd[]=dsaa" (anything). it will throw an error and the flag.<br><br>
 ->Natas25<br>
-help taken. 
+help taken. replacement of the "../" can be bypassed by using "....//", by trial n error, "/?lang=....//....//....//....//....//etc/passwd" takes us to the proper hierarchy. there is no vuln in code to print anything like a pwd, so we will hv to go to the logFile. 
+"/?lang=....//....//....//....//....///var/www/natas/natas25/logs/natas25_<enter phpsessid\>.log" will take us to the logFile as can be seen from the source code. 
+the only thing that can be change in logReq fxn is the user-agent header. using burp change the user-agent field in burp request to ```<?php system('cat /etc/natas_webpass/natas26');?>```. passthru won't work (tried). shell_exec and exec won't print out the output. don't forget to change _GET in burp or make the request from the logFile page opened b4.<br><br>
+->Natas26<br>
+
+
 
 
 
